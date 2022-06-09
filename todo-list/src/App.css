@@ -1,0 +1,147 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;    
+    margin: 0;
+}
+
+body {
+    background-color: #112B3C;
+} 
+
+.App {    
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 90%;
+    border: none;
+    border-radius: .6em;
+    padding: 2em 0;
+    margin: 2em auto;
+    background-color: #205375;
+    box-shadow: 2px 3px 20px #222;      
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: .5px solid #333;
+}
+
+h2 {
+    margin: 0;
+    margin-bottom: .5em;
+    color: #fff;
+}
+
+.inputs {
+    margin: 1.5em 7% 0 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input {    
+    height: 2.3em;
+    padding-left: .5em;
+    outline: none;
+    border-radius: .2em;
+    border: none;   
+}
+
+input[name="title"] {
+    width: 61%;   
+}
+
+input[name="time"] {
+    width: 15%;
+    margin-left: .3em;    
+}
+
+button {
+    padding: .65em 1.2em;
+    margin-left: .3em;
+    cursor: pointer; 
+    background-color: #F66B0E;
+    border: none;
+    color: #fff;
+    border-radius: .2em;
+}
+
+button:hover {
+    background-color: #f7ae7e;
+}
+
+button:active {
+    transform: scale(.93);
+    transition: ease-in-out;
+}
+
+.divider {
+    display: flex;
+    margin-top: 1.5em;
+    border-top: .5px solid #333;
+}
+
+.task-container {
+    margin-top: 1.5em;
+}
+
+.message {
+    text-align: center;
+    color: rgb(192, 192, 192);
+    font-size: 15px;
+}
+
+.task-list {
+    color: #d5d5d5;
+    display: flex;
+    justify-content: space-between;    
+    margin: 0 7% 1em 7%;   
+}
+
+.task-list p {
+    font-size: 14px;
+    margin-top: .3em;
+    
+}
+
+.listItem {
+    margin-bottom: .5em;    
+}
+
+.actions span {
+    padding: 0 .3em;
+    cursor: pointer;
+}
+
+.actions span:hover {
+    color: orange;
+}
+
+.actions span [BsFillCheckSquareFill]:active {
+    color: green; 
+}
+
+#loading {
+    font-size: 15px;
+    margin: 1em 0;
+    text-align: center;
+    color: #f7ae7e;
+}
+
+.task-done {
+    text-decoration: line-through;
+    color: orange;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .App {    
+        max-width: 700px;  
+    }
+
+    .inputs {
+        margin: 1.5em 1% 0 1%;
+    }
+ }
+    
