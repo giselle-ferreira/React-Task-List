@@ -1,13 +1,12 @@
 require('./db')
-require('dotenv/config');
+const dotenv = require('dotenv')
+dotenv.config({path:__dirname+'/.env'});
 
 const express = require('express');
 const connectToDB = require('./db/index')
-const port = 3001;
-const path = require('path')
+const port = process.env.PORT || 3001;
 
 const app = express();
-
 
 const cors = require('cors');
 
@@ -17,8 +16,7 @@ connectToDB();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'))
-app.use(express.static(path.join(__dirname + '/public')))
+
 
 const routes = require('./routes');
 app.use(routes)
