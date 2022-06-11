@@ -1,8 +1,9 @@
+
 export interface ITask {
-    _id: string,
+    _id?: string,
     title: string,
     time: string,
-    done: boolean,
+    done: boolean
     createAt?: string,
     updatedAt?: string
   }

@@ -6,12 +6,17 @@ import {
   BsPlusLg,
   BsCheckSquareFill,
   BsCheckSquare,
-  BsTrashFill,
+  BsTrashFill
 } from 'react-icons/bs';
 import { GiNothingToSay } from 'react-icons/gi';
 import { SiFitbit } from 'react-icons/si'; 
 import { FiEdit } from 'react-icons/fi'; 
 import { ITask } from './Interfaces'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 
 
 function App() {
@@ -20,11 +25,13 @@ function App() {
   const [title, setTitle] = useState<string>(''); 
   const [time, setTime] = useState<string>(''); 
   const [isLoading, setIsLoading ] = useState(true); 
+  const [open, setOpen ] = useState(false); 
 
-  
+
   useEffect(() => {
       axios.get('http://localhost:3001/tasks')
       .then((response) => {
+        setIsLoading(true)
         setTasks(response.data.tasks);
       })
       .catch((err) => console.error(err))
@@ -35,62 +42,69 @@ function App() {
     }, [])
     
 
-    const handleCreate = (): void => {
+    const handleCreate = async ()  => {
       axios.post('http://localhost:3001/tasks/create', { title, time })
     .then((response) => {
-      const newTask = {_id: '', title: title, time: time, done: false}
+
+      const newTask = {title: title, time: time, done: false}
         setTasks([...tasks, newTask]);
 
+        toast.success('Tarefa Adicionada com sucesso!', { theme: 'colored' });
+
         setTitle('');
-        setTime('');
-  
+        setTime('');        
   
     })
-    .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error(err)
+        toast.error('Ops! Ocorreu um erro...', { theme: 'colored' })
+      })
     }
 
 
-    // const handleEdit = (_id: string): void => {
-    //   const newTitle = prompt('Informe o novo título')
-    //   const newTime = prompt('Informe o novo horário')      
-  
-    //   axios.put('http://localhost:3001/tasks/edit', { newTitle: newTitle, newTime: newTime 
-    //   }).then(() => {
-    //     setTasks(tasks.map((el: any) => {
-    //       return el._id == _id ? { _id: '', title: newTitle, time: newTime } : el
-    //     }))
-    //   }).catch((err) => console.error(err))
-      
-    // }
+    const handleEdit = async (_id: string, task: ITask): Promise<void>  => {      
+        
+    const MySwal = withReactContent(Swal)
+    setOpen(true)
 
-    const handleEdit = (_id: string): any => {
-      const newTitle = prompt('Informe o novo título')
-      const newTime = prompt('Informe o novo horário')      
+    const { value: newTitle } = await MySwal.fire({
+      customClass: {
+        container: 'swal-container',
+      },
+      input: 'text',
+      inputLabel: 'Atualizar Tarefa',
+      inputPlaceholder: 'Informe o título alterado da tarefa'
+    }) 
+    
+    const { value: newTime } = await MySwal.fire({
+      customClass: {
+        container: 'swal-container',
+      },
+      input: 'text',
+      inputLabel: 'Atualizar horário',
+      inputPlaceholder: 'Horário...'
+    })
 
-      axios.put('http://localhost:3001/tasks/edit', { _id, newTitle: newTitle, newTime: newTime 
-      }).then(() => {
+    setOpen(false)
 
-          setTasks(tasks.map((task: any) => {
-          return task._id === _id ? { _id, title: newTitle, time: newTime, done: false } : task
-          }))
-      // }).catch((err) => console.error(err))
+      axios.put(`http://localhost:3001/tasks/edit`, {_id, title: newTitle, time: newTime }
+    ).then((response) => {         
 
-        // const editedTask = { _id: _id, title: newTitle, time: newTime, done: false }
-        // console.log(editedTask)
-        // setTasks(tasks.filter((task: ITask) => {
-        //   return task._id !== _id ? [...tasks, editedTask]  : task
-        // }))        
+      setTasks(tasks.map((task: ITask): any => {          
+          return  task._id === _id ? { ...task, title: newTitle, time: newTime } : task;          
+      }))
+
+      toast.success('Tarefa Atualizada com sucesso!', { theme: 'colored' })
+
+    })
+    .catch((err) => {
+      console.error(err)
+      toast.error('Ops! Ocorreu um erro...', { theme: 'colored' })
+    })     
+  }
 
 
-        // setTasks(tasks.filter((task: ITask) => {
-        //   return task._id === _id ? (task === editedTask) : task ))
-        // }
-
-      })      
-      .catch((err) => console.error(err))      
-    }
-
-    const handleDelete = (_id: string): void => {
+    const handleDelete = async (_id: string): Promise<void> => {
         axios.delete(`http://localhost:3001/tasks/delete/${_id}`)
         .then(() => {
 
@@ -98,41 +112,61 @@ function App() {
             return task._id != _id
           }))
 
+          toast.success('Tarefa deletada com sucesso!', { theme: 'colored' });
+
+        })
+        .catch((err) => {
+          console.error(err)
+          toast.error('Ops! Ocorreu um erro...', { theme: 'colored' })
         })
     }
 
-    const handleDone = (_id: string, task: ITask): void  => {      
-        task.done = !task.done
-        const title = task.title
-        const time = task.time  
+
+    const handleDone = async (_id: string, task: ITask): Promise<any>  => {      
       
-        axios.put(`http://localhost:3001/tasks/status/${_id}`, { done: false }
+        axios.put(`http://localhost:3001/tasks/status`, {_id, done: true }
       ).then((response) => {         
 
-        const taskDone = { _id: _id, title, time, done: task.done }
-        console.log(taskDone)
-          setTasks(tasks.map((task: ITask): any => {          
-            return  task._id === _id ? taskDone : task;          
+        setTasks(tasks.map((task: ITask): any => {          
+            return  task._id === _id ? { ...task, done: true } : task;          
         }))
 
-       
-        // const taskDone = { _id: '', done: task.done }
-        // setTasks(tasks.filter((task: any) => {
-        //   return  task._id !== _id   
+        toast.success('Tarefa Realizada! Uhu!', { theme: 'colored' });
 
-        // }))
       })
-      .catch((err) => console.error(err))      
+      .catch((err) => {
+        console.error(err)
+        toast.error('Ops! Ocorreu um erro...', { theme: 'colored' })
+      })  
+          
     }
-    
 
+
+    const handleClearTasks =  async (): Promise<void> => {
+      axios.delete(`http://localhost:3001/tasks/delete-tasks`)
+      .then(() => {
+
+        setTasks(tasks.filter((task: ITask) => {
+          return task != task 
+        }))
+        
+        toast.success('Lista deletada com sucesso!', { theme: 'colored' });
+
+      })
+      .catch((err) => {
+        console.error(err)
+        toast.error('Ops! Ocorreu um erro...', { theme: 'colored' })
+      })
+  }
   
+
   return (
-    <div className="App">
+    <div className="App">  
+    <div className={open === true ?'swal-bg' : ''}></div> 
       <header>
         <h2><FaCheckDouble color='#F66B0E' /> Minhas Tarefas</h2>
       </header>
-
+      
       <div className="inputs">   
         <input type="hidden" name="_id"/>
         <input
@@ -166,20 +200,20 @@ function App() {
                        
           return(
             <div className="task-list" key={key}>
-              <div>     
-                <h4 className={task.done ? 'task-done' : ''} >
+              <div className={task.done === true ? 'task-done' : ''}>     
+                <h4 >
                   <SiFitbit color='#F66B0E' size={14} /> {task.title}</h4>
-                <p>Horário: {task.time}h</p>
+                <p className={task.done === true ? 'task-done' : ''}>Horário: {task.time}h</p>
               </div>
 
               <div className="actions">
-                <span onClick={() => handleDone(task._id, task)}>
+                <span onClick={() => handleDone(task._id, task)} title="Realizada!">
                   {!task.done ? <BsCheckSquare size={20} /> : <BsCheckSquareFill color='#F66B0E' size={20} /> }
                 </span>
-                <span onClick={() => handleEdit(task._id)}>
+                <span onClick={() => handleEdit(task._id, task)} title="Editar">
                   <FiEdit size={20} />
                 </span>
-                <span onClick={() => handleDelete(task._id)}>
+                <span onClick={() => handleDelete(task._id)} title="Deletar">
                   <BsTrashFill size={20} />
                 </span>
               </div>
@@ -187,6 +221,22 @@ function App() {
             )
         })}
       </div>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
+        
+        <div className="clearTasksBtn" >
+          <button onClick={() => handleClearTasks()}>LIMPAR LISTA</button>
+        </div>         
     </div>
   )
 }

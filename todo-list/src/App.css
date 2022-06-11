@@ -5,9 +5,11 @@
 
 body {
     background-color: #112B3C;
+    overflow: hidden;
 } 
 
 .App {    
+    position: relative;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -30,11 +32,11 @@ header {
 h2 {
     margin: 0;
     margin-bottom: .5em;
-    color: #fff;
+    color: #EFEFEF;
 }
 
 .inputs {
-    margin: 1.5em 7% 0 7%;
+    margin: 1.5em 6% 0 6%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,14 +48,15 @@ input {
     outline: none;
     border-radius: .2em;
     border: none;   
+    background-color: #EFEFEF;
 }
 
 input[name="title"] {
-    width: 61%;   
+    width: 65%;   
 }
 
 input[name="time"] {
-    width: 15%;
+    width: 20%;
     margin-left: .3em;    
 }
 
@@ -63,7 +66,7 @@ button {
     cursor: pointer; 
     background-color: #F66B0E;
     border: none;
-    color: #fff;
+    color: #EFEFEF;
     border-radius: .2em;
 }
 
@@ -90,19 +93,19 @@ button:active {
     text-align: center;
     color: rgb(192, 192, 192);
     font-size: 15px;
+    margin-bottom: 1em;
 }
 
 .task-list {
     color: #d5d5d5;
     display: flex;
     justify-content: space-between;    
-    margin: 0 7% 1em 7%;   
+    margin: 0 7% 1.5em 7%;   
 }
 
 .task-list p {
     font-size: 14px;
-    margin-top: .3em;
-    
+    margin-top: .3em;    
 }
 
 .listItem {
@@ -118,10 +121,6 @@ button:active {
     color: orange;
 }
 
-.actions span [BsFillCheckSquareFill]:active {
-    color: green; 
-}
-
 #loading {
     font-size: 15px;
     margin: 1em 0;
@@ -131,17 +130,84 @@ button:active {
 
 .task-done {
     text-decoration: line-through;
-    color: orange;
+    color: #F66B0E;
+}
+
+.clearTasksBtn {
+    margin: 1em 7% 0 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #F66B0E;    
+}
+
+.clearTasksBtn:hover {
+    background-color: #F66B0E;
+    color: #fff;
+}
+
+.clearTasksBtn button {
+    background-color: transparent;
+    font-size: .75em;
+}
+
+.swal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 180px;
+    padding: 2em 2em 0 2em;
+    background-color: #194059;
+    border-radius: .35em;
+    box-shadow: 2px 3px 20px #222;
+    z-index: 2;    
+}
+
+.swal-bg {
+    content: '';
+    position: absolute;
+    height: 200vh;
+    width: 200vw;
+    top: -8%;
+    left: -100%;
+    background: #000 repeat;
+    z-index: 1;
+    opacity: .6;    
+}
+
+.swal-container label {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 1em;
+    font-weight: 600;
+    color: #fff;
+}
+
+.swal-container button {
+    margin: 2em auto 0 auto;
+    width: 60%;
+    padding: .7em 0;
 }
 
 
-@media only screen and (min-width: 768px) {
+@media (min-width: 768px) {
     .App {    
         max-width: 700px;  
     }
 
-    .inputs {
-        margin: 1.5em 1% 0 1%;
+    .swal-container {
+        max-width: 550px; 
+    }
+
+    input[name="title"] {
+        width: 75%;   
+    }
+    
+    input[name="time"] {
+        width: 10%;
     }
  }
     
