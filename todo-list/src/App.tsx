@@ -46,7 +46,7 @@ function App() {
       axios.post('https://mytasks-react.herokuapp.com/tasks/create', { title, time })
     .then((response) => {
 
-      const newTask = {title: title, time: time, done: false}
+      const newTask = {_id: '1234', title: title, time: time, done: false}
         setTasks([...tasks, newTask]);
 
         toast.success('Tarefa Adicionada com sucesso!', { theme: 'colored' });
