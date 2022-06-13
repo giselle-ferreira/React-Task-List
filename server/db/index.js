@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 dotenv.config({path:__dirname+'/.env'});
 
 function connectToDB() {
-    mongoose.connect('mongodb+srv://root:migles123@mytasks-cluster.agxrr.mongodb.net/react-todo-list?retryWrites=true&w=majority', {
+    mongoose.connect(process.env.DB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true // for legacy
     })
