@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { ObjectId } from 'mongodb';
 
 
 
@@ -42,11 +43,11 @@ function App() {
     }, [])
     
 
-    const handleCreate = async ()  => {
-      axios.post('https://mytasks-react.herokuapp.com/tasks/create', { title, time })
+    const handleCreate = ()  => {
+      axios.post('http://localhost:3001/tasks/create', { title, time })
     .then((response) => {
 
-      const newTask = {_id: '1234', title: title, time: time, done: false}
+      const newTask = {_id: '', title: title, time: time, done: false}
         setTasks([...tasks, newTask]);
 
         toast.success('Tarefa Adicionada com sucesso!', { theme: 'colored' });
@@ -87,7 +88,7 @@ function App() {
 
     setOpen(false)
 
-      axios.put(`https://mytasks-react.herokuapp.com/tasks/edit`, {_id, title: newTitle, time: newTime }
+      axios.put(`http://localhost:3001/tasks/edit`, {_id, title: newTitle, time: newTime }
     ).then((response) => {         
 
       setTasks(tasks.map((task: ITask): any => {          
@@ -105,7 +106,7 @@ function App() {
 
 
     const handleDelete = async (_id: string): Promise<void> => {
-        axios.delete(`https://mytasks-react.herokuapp.com/tasks/delete/${_id}`)
+        axios.delete(`http://localhost:3001/tasks/delete/${_id}`)
         .then(() => {
 
           setTasks(tasks.filter((task: ITask) => {
@@ -124,7 +125,7 @@ function App() {
 
     const handleDone = async (_id: string, task: ITask): Promise<any>  => {      
       
-        axios.put(`https://mytasks-react.herokuapp.com/tasks/status`, {_id, done: true }
+        axios.put(`http://localhost:3001/tasks/status`, {_id, done: true }
       ).then((response) => {         
 
         setTasks(tasks.map((task: ITask): any => {          
@@ -143,7 +144,7 @@ function App() {
 
 
     const handleClearTasks =  async (): Promise<void> => {
-      axios.delete(`https://mytasks-react.herokuapp.com/tasks/delete-tasks`)
+      axios.delete(`http://localhost:3001/tasks/delete-tasks`)
       .then(() => {
 
         setTasks(tasks.filter((task: ITask) => {

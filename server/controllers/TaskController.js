@@ -1,5 +1,6 @@
 const { db } = require('../models/Task');
 const Task = require('../models/Task'); 
+const { ObjectId } = require("mongodb");
 
 class TaskController {
 
@@ -15,8 +16,11 @@ class TaskController {
 
 
     static async createTask(req, res) {
+        
         const { _id, title, time, done } = req.body
-        const newTask = Task({ _id, title, time, done });
+        const id = ObjectId.toString(_id)
+
+        const newTask = Task({ id, title, time, done });
 
         if(!newTask) {
             res.json({ message: "Something went wrong"});
@@ -29,8 +33,9 @@ class TaskController {
 
     static async editTask(req, res) {
         const { _id, title, time } = req.body
+        const id = ObjectId(_id)
 
-        await Task.findByIdAndUpdate(_id, { title, time });
+        await Task.findByIdAndUpdate(id, { title, time });
 
         if(title === '' && time === '' ) {
             res.json({ message: "Something went wrong"});
@@ -69,8 +74,9 @@ class TaskController {
 
     static async updateStatus(req, res) {
         const { _id, done } = req.body
+        const id = ObjectId(_id)
 
-        await Task.findByIdAndUpdate( _id, { done })
+        await Task.findByIdAndUpdate( id, { done })
 
         if(done === false) {
             res.json({ message: "Something went wrong"});

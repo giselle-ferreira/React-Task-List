@@ -139,7 +139,8 @@ button:active {
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    border: 1px solid #F66B0E;    
+    border: 1px solid #F66B0E;  
+    cursor: pointer;  
 }
 
 .clearTasksBtn:hover {
@@ -164,6 +165,19 @@ button:active {
     border-radius: .35em;
     box-shadow: 2px 3px 20px #222;
     z-index: 2;    
+    text-align: center;
+}
+
+.my-validation-message::before {
+    display: none;
+  }
+
+.my-validation-message {
+    color: #fff;
+    margin-top: .6em;
+    font-size: .9em;
+    background-color: rgb(163, 37, 37);
+    padding: .3em;
 }
 
 .swal-bg {
