@@ -6,7 +6,7 @@
 <br/>
 
 >## About
-Project of a Task List developed in ReactJs, Typescript, NodeJs, Express, MongoDB and Axios.
+Project of a Task List developed in ReactJs, Typescript, NodeJs, Express, MongoDB and Axios. This is the first app I develop using React, and a task list is a good exercise to start with.
 
 <br/>
 
@@ -29,6 +29,7 @@ Project of a Task List developed in ReactJs, Typescript, NodeJs, Express, MongoD
 <img alt="Express" src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB" height="27" />   
 <img alt="SweetAlert2" src="https://img.shields.io/badge/-sweetAlert2-orange" height="27" />   
 <img alt="React-toastify" src="https://img.shields.io/badge/-React--toastify-blue" height="27" />   
+<img alt="Axios" src="https://img.shields.io/badge/-Axios-blueviolet" height="27" />   
 </p>
 
 <br/>
