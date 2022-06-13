@@ -5,6 +5,10 @@
 
 <br/>
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<br/>
+
 >## About
 Project of a Task List developed in ReactJs, Typescript, NodeJs, Express, MongoDB and Axios. This is the first app I develop using React, and a task list is a good exercise to start with.
 
@@ -36,7 +40,7 @@ Project of a Task List developed in ReactJs, Typescript, NodeJs, Express, MongoD
 
 > ## License 📝
 
-(MIT License)[https://github.com/giselle-ferreira/React-Task-List/blob/main/LICENSE.md]
+[MIT License](https://github.com/giselle-ferreira/React-Task-List/blob/main/LICENSE.md)
 
 <br/>
 
