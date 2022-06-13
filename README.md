@@ -21,6 +21,9 @@ Project of a Task List developed in ReactJs, Typescript, NodeJs, Express, MongoD
 <img  src="https://i.postimg.cc/1XY4TwXx/mytasks-react.gif" width="800" />
 </p>
 
+#### Mobile
+<img  src="https://i.postimg.cc/jdQrCnB6/mobile.png" width="310"/>
+
 <br/>
 
 >## Technologies 🧰
