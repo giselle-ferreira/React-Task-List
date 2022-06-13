@@ -34,6 +34,12 @@ Project of a Task List developed in ReactJs, Typescript, NodeJs, Express, MongoD
 
 <br/>
 
+> ## License 📝
+
+(MIT License)[https://github.com/giselle-ferreira/React-Task-List/blob/main/LICENSE.md]
+
+<br/>
+
 > ## Author 👋
 
 Made with ❤️ by <a href="https://www.linkedin.com/in/giselleferreiras/" >Giselle Ferreira.</a>
